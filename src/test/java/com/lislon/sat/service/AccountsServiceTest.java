@@ -11,6 +11,7 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.*;
+import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 
 public class AccountsServiceTest {
 
@@ -37,5 +38,14 @@ public class AccountsServiceTest {
         assertThat(service.getAccounts(), contains(
                 hasProperty("id", equalTo(1))
         ));
+    }
+
+    @Test
+    public void getSingleAccount() {
+        Account expected = Account.createWithBalance(10);
+        service.add(expected);
+
+        Account returnedAccount = service.get(expected.getId());
+        assertReflectionEquals(expected, returnedAccount);
     }
 }

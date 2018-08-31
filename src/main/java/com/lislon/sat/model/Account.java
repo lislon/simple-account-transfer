@@ -30,4 +30,10 @@ public class Account {
     public void setBalance(Integer balance) {
         this.balance = balance;
     }
+
+    public static Account createWithBalance(Integer balance) {
+        Account account = new Account();
+        account.setBalance(balance);
+        return account;
+    }
 }

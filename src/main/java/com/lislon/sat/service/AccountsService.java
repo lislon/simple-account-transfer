@@ -4,23 +4,29 @@ import com.lislon.sat.model.Account;
 import org.jvnet.hk2.annotations.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
 public class AccountsService {
 
-    private ArrayList<Account> accounts = new ArrayList<>();
+    private HashMap<Integer, Account> accounts = new HashMap<>();
 
     public void populateAccounts(List<Account> accounts) {
-        this.accounts.addAll(accounts);
+        accounts.forEach(this::add);
     }
 
-    public List<Account> getAccounts() {
-        return accounts;
+    public Collection<Account> getAccounts() {
+        return accounts.values();
     }
 
     public void add(Account account) {
-        account.id = accounts.size() + 1;
-        accounts.add(account);
+        account.setId(accounts.size() + 1);
+        accounts.put(account.getId(), account);
+    }
+
+    public Account get(int accountId) {
+        return accounts.get(accountId);
     }
 }

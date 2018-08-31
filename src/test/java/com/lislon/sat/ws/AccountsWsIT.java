@@ -32,4 +32,11 @@ public class AccountsWsIT extends AbstractIT {
         Assert.assertNotNull(account.getId());
         Assert.assertEquals(Integer.valueOf(0),  account.getBalance());
     }
+
+    @Test
+    public void should_get_account_info() {
+        Account account = target("accounts/1").request().get(Account.class);
+        Assert.assertNotNull(account.getBalance());
+    }
+
 }

@@ -4,30 +4,32 @@ import com.lislon.sat.model.Account;
 import com.lislon.sat.service.AccountsService;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.Collection;
 import java.util.List;
 
 /**
  * Created by ele on 30.08.2018.
  */
 @Path("/accounts")
+@Produces(MediaType.APPLICATION_JSON)
 public class AccountsWs {
     @Inject
     private AccountsService accountsService;
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Account> getAccounts() {
-        List<Account> accounts = accountsService.getAccounts();
-        return accounts;
+    public Collection<Account> getAccounts() {
+        return accountsService.getAccounts();
+    }
+
+    @GET
+    @Path("{id}")
+    public Account get(@PathParam("id") Integer id) {
+        return new Account(id, 0);
     }
 
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
     public Account addAccount(Account newAccount) {
         accountsService.add(newAccount);
         return newAccount;
