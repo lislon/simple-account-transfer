@@ -5,6 +5,7 @@ import com.lislon.sat.service.AccountsService;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -23,5 +24,12 @@ public class AccountsWs {
     public List<Account> getAccounts() {
         List<Account> accounts = accountsService.getAccounts();
         return accounts;
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Account addAccount(Account newAccount) {
+        accountsService.add(newAccount);
+        return newAccount;
     }
 }

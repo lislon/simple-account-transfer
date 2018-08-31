@@ -18,4 +18,9 @@ public class AccountsService {
     public List<Account> getAccounts() {
         return accounts;
     }
+
+    public void add(Account account) {
+        account.id = accounts.size() + 1;
+        accounts.add(account);
+    }
 }
