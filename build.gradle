@@ -1,0 +1,31 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
+    }
+}
+
+plugins {
+    id 'java-library'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
+}
+
+dependencies {
+    implementation 'org.apache.tomcat.embed:tomcat-embed-core:8.5.23'
+    implementation 'org.glassfish.jersey.containers:jersey-container-servlet:2.27'
+    implementation 'org.glassfish.jersey.inject:jersey-hk2:2.27'
+    implementation 'org.glassfish.hk2:hk2-locator:2.5.0-b36'
+    implementation 'org.glassfish.jersey.media:jersey-media-json-jackson:2.27'
+
+    testImplementation  'junit:junit:4.11'
+    testImplementation 'org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-inmemory:2.27'
+}
+
+repositories {
+    mavenCentral()
+}
+
+mainClassName = "com.lislon.sat.AppLauncher"
