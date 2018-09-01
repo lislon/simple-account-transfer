@@ -9,8 +9,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class TransactionsServiceTest {
-    TransactionsService service;
 
+    public static final int NON_EXISTING_ACCOUNT_ID = 123;
+
+    private TransactionsService service;
     private AccountsService accountsService;
 
     @Before
@@ -21,25 +23,44 @@ public class TransactionsServiceTest {
 
     @Test
     public void testSuccessfulTransaction() {
-        Account account1 = givenAccount(100);
-        Account account2 = givenAccount(100);
+        Account sender = givenAccount(100);
+        Account recipient = givenAccount(100);
 
-        TransferResult result = service.transfer(account1.getId(), account2.getId(), 50);
+        TransferResult result = service.transfer(sender.getId(), recipient.getId(), 50);
 
-        assertThat(account1.getBalance(), is(50));
-        assertThat(account2.getBalance(), is(150));
+        assertThat(sender.getBalance(), is(50));
+        assertThat(recipient.getBalance(), is(150));
         assertThat(result, is(TransferResult.SUCCESS));
     }
 
     @Test
     public void testInsufficientFundsTransfer() {
-        Account account1 = givenAccount(10);
-        Account account2 = givenAccount(50);
+        Account sender = givenAccount(10);
+        Account recipient = givenAccount(50);
 
-        TransferResult result = service.transfer(account1.getId(), account2.getId(), 50);
+        TransferResult result = service.transfer(sender.getId(), recipient.getId(), 50);
+
         assertThat(result, is(TransferResult.INSUFFICIENT_FUNDS));
-        assertThat(account1.getBalance(), is(10));
-        assertThat(account2.getBalance(), is(50));
+        assertThat(sender.getBalance(), is(10));
+        assertThat(recipient.getBalance(), is(50));
+    }
+
+    @Test
+    public void testTransferFromNonExistingAccount() {
+        Account recipient = givenAccount(10);
+
+        TransferResult result = service.transfer(NON_EXISTING_ACCOUNT_ID, recipient.getId(), 50);
+
+        assertThat(result, is(TransferResult.SENDER_ACCOUNT_NOT_EXISTS));
+    }
+
+    @Test
+    public void testTransferToNonExistingAccount() {
+        Account sender = givenAccount(10);
+
+        TransferResult result = service.transfer(sender.getId(), NON_EXISTING_ACCOUNT_ID, 50);
+
+        assertThat(result, is(TransferResult.RECEIVER_ACCOUNT_NOT_EXISTS));
     }
 
     private Account givenAccount(int balance) {
