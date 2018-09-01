@@ -18,6 +18,9 @@ public class AccountsWs {
     @Inject
     private AccountsService accountsService;
 
+    @Inject
+    private AccountsService accountsService2;
+
     @GET
     public Collection<Account> getAccounts() {
         return accountsService.getAccounts();
@@ -26,7 +29,7 @@ public class AccountsWs {
     @GET
     @Path("{id}")
     public Account get(@PathParam("id") Integer id) {
-        return new Account(id, 0);
+        return accountsService.get(id);
     }
 
     @POST

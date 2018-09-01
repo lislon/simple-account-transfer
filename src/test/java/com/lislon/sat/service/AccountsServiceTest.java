@@ -5,11 +5,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.Collections;
 
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 
@@ -24,7 +23,8 @@ public class AccountsServiceTest {
 
     @Test
     public void getAccounts() {
-        Assert.assertEquals(Collections.emptyList(), service.getAccounts());
+        service.populateAccounts(Arrays.asList(new Account()));
+        assertThat(service.getAccounts(), not(empty()));
     }
 
     @Test
@@ -34,7 +34,7 @@ public class AccountsServiceTest {
 
         service.add(account);
 
-        assertNotNull(account.getId());
+        assertThat(account.getId(), notNullValue());
         assertThat(service.getAccounts(), contains(
                 hasProperty("id", equalTo(1))
         ));

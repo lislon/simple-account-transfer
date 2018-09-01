@@ -3,8 +3,8 @@ package com.lislon.sat.model;
 import javax.xml.bind.annotation.XmlRootElement;
 
 public class Account {
-    public Integer id;
-    public Integer balance;
+    private Integer id;
+    private Integer balance;
 
     public Account() {
         this.balance = 0;
@@ -29,6 +29,14 @@ public class Account {
 
     public void setBalance(Integer balance) {
         this.balance = balance;
+    }
+
+    public void deposit(Integer amount) {
+        this.balance += amount;
+    }
+
+    public void withdraw(Integer amount) {
+        this.balance -= amount;
     }
 
     public static Account createWithBalance(Integer balance) {
