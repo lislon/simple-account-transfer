@@ -2,11 +2,16 @@ package com.lislon.sat.service;
 
 import com.lislon.sat.model.Account;
 import com.lislon.sat.model.TransferResult;
+import org.jvnet.hk2.annotations.Service;
 
+import javax.inject.Inject;
+
+@Service
 public class TransactionsService {
 
     private final AccountsService accountsService;
 
+    @Inject
     public TransactionsService(AccountsService accountsService) {
         this.accountsService = accountsService;
     }
@@ -23,12 +28,21 @@ public class TransactionsService {
             return TransferResult.RECEIVER_ACCOUNT_NOT_EXISTS;
         }
 
-        if (from.getBalance() < amount) {
-            return TransferResult.INSUFFICIENT_FUNDS;
-        }
+        // TODO: Unit test deadlock
+        Object lock1 = from.getId() < to.getId() ? from : to;
+        Object lock2 = from.getId() > to.getId() ? from : to;
 
-        from.withdraw(amount);
-        to.deposit(amount);
+        synchronized (lock1) {
+            synchronized (lock2) {
+
+                if (from.getBalance() < amount) {
+                    return TransferResult.INSUFFICIENT_FUNDS;
+                }
+
+                from.withdraw(amount);
+                to.deposit(amount);
+            }
+        }
         return TransferResult.SUCCESS;
     }
 }

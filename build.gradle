@@ -23,6 +23,7 @@ dependencies {
     testImplementation 'junit:junit:4.11'
     testImplementation 'org.unitils:unitils-core:3.4.6'
     testImplementation 'org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-inmemory:2.27'
+    testImplementation 'org.mapdb:thread-weaver:3.0.mapdb'
 }
 
 repositories {

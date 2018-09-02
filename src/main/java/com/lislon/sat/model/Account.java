@@ -1,7 +1,5 @@
 package com.lislon.sat.model;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 public class Account {
     private Integer id;
     private Integer balance;

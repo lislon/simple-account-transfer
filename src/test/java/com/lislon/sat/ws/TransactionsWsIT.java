@@ -17,20 +17,20 @@ public class TransactionsWsIT extends AbstractIT {
         return new JerseyConfiguration();
     }
 
-//    @Test
-//    public void should_transfer_funds() {
-//        int accountId1 = createAccountWithBalance(100);
-//        int accountId2 = createAccountWithBalance(200);
-//
-//        Transaction completedTransaction = sendMoney(accountId1, accountId2, 50);
-//        Assert.assertNotNull(completedTransaction.getId());
-//
-//        Account account1 = apiGetAccount(accountId1);
-//        Account account2 = apiGetAccount(accountId2);
-//
-//        Assert.assertEquals(Integer.valueOf(50), account1.getBalance());
-//        Assert.assertEquals(Integer.valueOf(250), account2.getBalance());
-//    }
+    @Test
+    public void should_transfer_funds() {
+        int accountId1 = createAccountWithBalance(100);
+        int accountId2 = createAccountWithBalance(200);
+
+        Transaction completedTransaction = sendMoney(accountId1, accountId2, 50);
+        Assert.assertNotNull(completedTransaction.getId());
+
+        Account account1 = apiGetAccount(accountId1);
+        Account account2 = apiGetAccount(accountId2);
+
+        Assert.assertEquals(Integer.valueOf(50), account1.getBalance());
+        Assert.assertEquals(Integer.valueOf(250), account2.getBalance());
+    }
 
     private Transaction sendMoney(int accountId1, int accountId2, int amount) {
         Entity<Transaction> request = Entity.json(

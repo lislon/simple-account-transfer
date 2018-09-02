@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by ele on 30.08.2018.
@@ -18,8 +17,6 @@ public class AccountsWs {
     @Inject
     private AccountsService accountsService;
 
-    @Inject
-    private AccountsService accountsService2;
 
     @GET
     public Collection<Account> getAccounts() {
