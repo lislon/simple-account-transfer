@@ -1,9 +1,9 @@
 package com.lislon.sat.model;
 
 /**
- * Indicates the result of transfer operation from one account to another.
+ * Indicates the status of transfer operation from one account to another.
  */
-public enum TransferResult {
+public enum TransactionStatus {
     /**
      * Transfer completed successfully.
      */

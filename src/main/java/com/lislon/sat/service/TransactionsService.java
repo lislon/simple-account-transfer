@@ -1,7 +1,8 @@
 package com.lislon.sat.service;
 
 import com.lislon.sat.model.Account;
-import com.lislon.sat.model.TransferResult;
+import com.lislon.sat.model.TransactionDetails;
+import com.lislon.sat.model.TransactionStatus;
 import org.jvnet.hk2.annotations.Service;
 
 import javax.inject.Inject;
@@ -24,16 +25,20 @@ public class TransactionsService {
      * @param amount amount of money to transfer from account.
      * @return Result of transfer operation.
      */
-    public TransferResult transfer(Integer senderAccountId, Integer recipientAccountId, int amount) {
+    public TransactionDetails transfer(Integer senderAccountId, Integer recipientAccountId, int amount) {
+        return TransactionDetails.create(doTransfer(senderAccountId, recipientAccountId, amount));
+    }
+
+    private TransactionStatus doTransfer(Integer senderAccountId, Integer recipientAccountId, int amount) {
         Account from = accountsService.get(senderAccountId);
         Account to = accountsService.get(recipientAccountId);
 
         if (from == null) {
-            return TransferResult.SENDER_ACCOUNT_NOT_EXISTS;
+            return TransactionStatus.SENDER_ACCOUNT_NOT_EXISTS;
         }
 
         if (to == null) {
-            return TransferResult.RECEIVER_ACCOUNT_NOT_EXISTS;
+            return TransactionStatus.RECEIVER_ACCOUNT_NOT_EXISTS;
         }
 
         // TODO: Unit test deadlock
@@ -44,13 +49,13 @@ public class TransactionsService {
             synchronized (lock2) {
 
                 if (from.getBalance() < amount) {
-                    return TransferResult.INSUFFICIENT_FUNDS;
+                    return TransactionStatus.INSUFFICIENT_FUNDS;
                 }
 
                 from.withdraw(amount);
                 to.deposit(amount);
             }
         }
-        return TransferResult.SUCCESS;
+        return TransactionStatus.SUCCESS;
     }
 }

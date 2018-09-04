@@ -2,16 +2,10 @@ package com.lislon.sat.service;
 
 import com.google.testing.threadtester.*;
 import com.lislon.sat.model.Account;
-import com.lislon.sat.model.TransferResult;
+import com.lislon.sat.model.TransactionDetails;
+import com.lislon.sat.model.TransactionStatus;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Map;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.Semaphore;
 
 import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -23,8 +17,8 @@ public class TransactionsIsolationIT {
     private volatile Account sender;
     private volatile Account recipient;
 
-    private volatile TransferResult result1;
-    private volatile TransferResult result2;
+    private volatile TransactionDetails result1;
+    private volatile TransactionDetails result2;
 
     @Test
     public void testPutIfAbsent() {
@@ -57,6 +51,8 @@ public class TransactionsIsolationIT {
 
     @ThreadedAfter
     public void after() {
-        Assert.assertTrue(result1 == TransferResult.INSUFFICIENT_FUNDS || result2 == TransferResult.INSUFFICIENT_FUNDS);
+        boolean isFirstTxFailed = result1.getStatus() == TransactionStatus.INSUFFICIENT_FUNDS;
+        boolean isSecondTxFailed = result2.getStatus() == TransactionStatus.INSUFFICIENT_FUNDS;
+        Assert.assertTrue(isFirstTxFailed || isSecondTxFailed);
     }
 }
