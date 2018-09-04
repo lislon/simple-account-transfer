@@ -23,9 +23,6 @@ dependencies {
     implementation "org.glassfish.hk2:hk2-locator:2.5.0-b36"
     implementation "org.glassfish.jersey.media:jersey-media-json-jackson:${jerseyVersion}"
 
-    //  embed tomcat
-    //    implementation "org.apache.tomcat.embed:tomcat-embed-core:8.5.23"
-
     implementation "org.eclipse.jetty:jetty-server:${jettyVersion}"
     implementation "org.eclipse.jetty:jetty-webapp:${jettyVersion}"
     implementation "org.eclipse.jetty:jetty-servlet:${jettyVersion}"

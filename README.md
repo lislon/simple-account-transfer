@@ -25,11 +25,11 @@ gradle build
 Running
 =======
 ```batch
-gradle application:run
+gradle run
 ```
 
 The app will run on [http://localhost:8080/]
 
 Trying it out
 =============
-Navigate to [http://localhost:8080/docs](documentation) and click `Try me out` buttons.
+Navigate to [http://localhost:8080/docs](documentation), then select API method and click `Try it out` buttons.
