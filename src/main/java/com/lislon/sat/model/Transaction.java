@@ -1,5 +1,6 @@
 package com.lislon.sat.model;
 
+
 public class Transaction {
     public Integer id;
 
