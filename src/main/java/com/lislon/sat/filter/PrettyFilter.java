@@ -12,6 +12,9 @@ import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.Provider;
 
+/**
+ * Modifies jackson object generator to print formatted JSON.
+ */
 @Provider
 public class PrettyFilter implements ContainerResponseFilter {
 

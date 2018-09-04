@@ -1,0 +1,20 @@
+resourcePackages:
+  - io.docs.sample.resource
+prettyPrint: true
+cacheTTL: 0
+openAPI:
+  info:
+    version: '1.0'
+    title: Simple account transfer
+    description: >
+      This is a minimalistic API to transfer money between accounts.
+      <p>It contains just 2 features:
+      <ol>
+        <li>Adding/Listing/Deleting account</li>
+        <li>Transfer funds between accounts</li>
+      </ol>
+    contact:
+      email: lislon@mail.ru
+    license:
+      name: Apache 2.0
+      url: http://www.apache.org/licenses/LICENSE-2.0.html

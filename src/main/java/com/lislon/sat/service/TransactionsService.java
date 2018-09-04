@@ -16,6 +16,14 @@ public class TransactionsService {
         this.accountsService = accountsService;
     }
 
+    /**
+     * Transfer funds from between accounts.
+     *
+     * @param senderAccountId sender's account id.
+     * @param recipientAccountId recipients's account id.
+     * @param amount amount of money to transfer from account.
+     * @return Result of transfer operation.
+     */
     public TransferResult transfer(Integer senderAccountId, Integer recipientAccountId, int amount) {
         Account from = accountsService.get(senderAccountId);
         Account to = accountsService.get(recipientAccountId);

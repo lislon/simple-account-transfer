@@ -1,7 +1,10 @@
 package com.lislon.sat;
 
-import org.apache.catalina.Context;
-import org.apache.catalina.startup.Tomcat;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.servlet.ServletContainer;
 
 /**
@@ -9,32 +12,44 @@ import org.glassfish.jersey.servlet.ServletContainer;
  */
 public class AppLauncher {
 
-    private static final String JERSEY_SERVLET_NAME = "jersey-container-servlet";
-
     public static void main(String[] args) throws Exception {
         new AppLauncher().start();
     }
 
     void start() throws Exception {
+        Server server = new Server(8080);
 
-        String port = System.getenv("PORT");
-        if (port == null || port.isEmpty()) {
-            port = "8080";
-        }
+        server.setHandler(new HandlerList(
+                getStaticResourceHandler(),
+                getApiResourceHandler()
+        ));
 
-        String contextPath = "";
-        String appBase = ".";
+        server.start();
+        server.join();
+    }
 
-        Tomcat tomcat = new Tomcat();
-        tomcat.setPort(Integer.valueOf(port));
-        tomcat.getHost().setAppBase(appBase);
+    /**
+     * Servlet for serving /api requests.
+     */
+    private ServletContextHandler getApiResourceHandler() {
+        ServletContainer servletContainer = new ServletContainer(new JerseyConfiguration());
+        ServletHolder servletHolder = new ServletHolder(servletContainer);
 
-        Context context = tomcat.addContext(contextPath, appBase);
-        Tomcat.addServlet(context, JERSEY_SERVLET_NAME,
-                new ServletContainer(new JerseyConfiguration()));
-        context.addServletMappingDecoded("/api/*", JERSEY_SERVLET_NAME);
+        ServletContextHandler contextHandler = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
+        contextHandler.setContextPath("/");
+        contextHandler.addServlet(servletHolder, "/api/*");
+        return contextHandler;
+    }
 
-        tomcat.start();
-        tomcat.getServer().await();
+    /**
+     * Servlet for serving static requests (api documentation).
+     */
+    private ResourceHandler getStaticResourceHandler() {
+        ResourceHandler staticResourceHandler = new ResourceHandler();
+        staticResourceHandler.setDirectoriesListed(true);
+        staticResourceHandler.setResourceBase(
+                this.getClass().getClassLoader().getResource("static").toExternalForm()
+        );
+        return staticResourceHandler;
     }
 }
