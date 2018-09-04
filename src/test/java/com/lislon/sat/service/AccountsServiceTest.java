@@ -1,12 +1,10 @@
 package com.lislon.sat.service;
 
 import com.lislon.sat.model.Account;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
@@ -23,7 +21,7 @@ public class AccountsServiceTest {
 
     @Test
     public void getAccounts() {
-        service.populateAccounts(Arrays.asList(new Account()));
+        service.addMany(Arrays.asList(new Account()));
         assertThat(service.getAccounts(), not(empty()));
     }
 

@@ -4,26 +4,37 @@ import com.lislon.sat.model.Account;
 import org.jvnet.hk2.annotations.Service;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * In-memory storage of accounts.
+ *
+ * This class is thread-safe.
+ */
 @Service
 public class AccountsService {
+
+    private ConcurrentHashMap<Integer, Account> accounts = new ConcurrentHashMap<>();
 
     public AccountsService() {
     }
 
-    private HashMap<Integer, Account> accounts = new HashMap<>();
-
-    public void populateAccounts(List<Account> accounts) {
+    public void addMany(List<Account> accounts) {
         accounts.forEach(this::add);
     }
 
     public Collection<Account> getAccounts() {
-        return accounts.values();
+        return Collections.unmodifiableCollection(accounts.values());
     }
 
-    public void add(Account account) {
+    /**
+     * Adds account into collection and assign new id to it.
+     *
+     * @param account Account to be added.
+     */
+    public synchronized void add(Account account) {
         account.setId(accounts.size() + 1);
         accounts.put(account.getId(), account);
     }

@@ -51,7 +51,7 @@ public class JerseyConfiguration extends ResourceConfig {
             @Override
             public AccountsService provide() {
                 AccountsService accountsService = new AccountsService();
-                accountsService.populateAccounts(PredefinedAccounts.getPredefinedAccounts());
+                accountsService.addMany(PredefinedAccounts.getPredefinedAccounts());
                 return accountsService;
             }
 

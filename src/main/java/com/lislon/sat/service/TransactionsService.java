@@ -7,6 +7,11 @@ import org.jvnet.hk2.annotations.Service;
 
 import javax.inject.Inject;
 
+/**
+ * Service for performing transactions between accounts.
+ *
+ * This class is thread-safe.
+ */
 @Service
 public class TransactionsService {
 
