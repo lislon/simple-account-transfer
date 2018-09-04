@@ -28,8 +28,8 @@ Running
 gradle run
 ```
 
-The app will run on [http://localhost:8080/]
+The app will run on [http://localhost:8080/](http://localhost:8080/docs)
 
 Trying it out
 =============
-Navigate to [http://localhost:8080/docs](documentation), then select API method and click `Try it out` buttons.
+Navigate to [http://localhost:8080/docs](http://localhost:8080/docs), then select API method and click `Try it out` buttons.
