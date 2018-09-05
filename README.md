@@ -28,7 +28,7 @@ Running
 gradle run
 ```
 
-The app will run on [http://localhost:8080/](http://localhost:8080/docs)
+The app will run on [http://localhost:8080/](http://localhost:8080/)
 
 Trying it out
 =============
