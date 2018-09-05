@@ -20,6 +20,10 @@ public enum TransactionStatus {
     SENDER_ACCOUNT_NOT_EXISTS,
 
     /**
+     * Invalid amount of transaction (<= 0).
+     */
+    INVALID_AMOUNT,
+    /**
      * Recipient's account id is not exists.
      */
     RECEIVER_ACCOUNT_NOT_EXISTS

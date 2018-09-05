@@ -64,6 +64,26 @@ public class TransactionsServiceTest {
         assertThat(result.getStatus(), is(TransactionStatus.RECEIVER_ACCOUNT_NOT_EXISTS));
     }
 
+    @Test
+    public void testTransferNegativeAmount() {
+        Account sender = givenAccount(10);
+        Account recipient = givenAccount(50);
+
+        TransactionResult negativeAmount = service.transfer(sender.getId(), recipient.getId(), -50);
+
+        assertThat(negativeAmount.getStatus(), is(TransactionStatus.INVALID_AMOUNT));
+    }
+
+    @Test
+    public void testTransferZeroAmount() {
+        Account sender = givenAccount(10);
+        Account recipient = givenAccount(50);
+
+        TransactionResult negativeAmount = service.transfer(sender.getId(), recipient.getId(), 0);
+
+        assertThat(negativeAmount.getStatus(), is(TransactionStatus.INVALID_AMOUNT));
+    }
+
     private Account givenAccount(int balance) {
         Account account = Account.createWithBalance(balance);
         accountsService.add(account);

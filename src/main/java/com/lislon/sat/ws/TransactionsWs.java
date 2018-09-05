@@ -70,6 +70,12 @@ public class TransactionsWs {
                         CODE_RECEIVER_ACCOUNT_NOT_EXISTS,
                         Response.Status.NOT_FOUND
                 );
+            case INVALID_AMOUNT:
+                return error(
+                        "Amount of transaction should be positive",
+                        CODE_INVALID_AMOUNT,
+                        Response.Status.BAD_REQUEST
+                );
             case SUCCESS:
                 return Response.ok().entity(result).build();
             default:

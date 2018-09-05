@@ -46,6 +46,10 @@ public class TransactionsService {
             return TransactionStatus.RECEIVER_ACCOUNT_NOT_EXISTS;
         }
 
+        if (amount <= 0) {
+            return TransactionStatus.INVALID_AMOUNT;
+        }
+
         // TODO: Unit test deadlock
         Object lock1 = from.getId() < to.getId() ? from : to;
         Object lock2 = from.getId() > to.getId() ? from : to;

@@ -44,6 +44,15 @@ public class TransactionsWsIT extends AbstractIT {
         Assert.assertEquals(HttpStatus.CONFLICT_409, transferResult.getStatus());
     }
 
+    @Test
+    public void should_catch_invalid_amount() throws Exception {
+        int accountId1 = createAccountWithBalance(100);
+        int accountId2 = createAccountWithBalance(200);
+
+        javax.ws.rs.core.Response transferResult = sendMoney(accountId1, accountId2, 0);
+        Assert.assertEquals(HttpStatus.BAD_REQUEST_400, transferResult.getStatus());
+    }
+
     private javax.ws.rs.core.Response sendMoney(int accountId1, int accountId2, int amount) {
         Entity<Transaction> request = Entity.json(
                 Transaction.send(accountId1, accountId2, amount)
