@@ -1,5 +1,6 @@
 package com.lislon.sat.error;
 
+import com.lislon.sat.model.Account;
 import com.lislon.sat.model.ApiError;
 import com.lislon.sat.model.TransactionDetails;
 

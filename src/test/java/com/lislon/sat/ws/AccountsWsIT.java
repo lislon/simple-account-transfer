@@ -2,11 +2,13 @@ package com.lislon.sat.ws;
 
 import com.lislon.sat.JerseyConfiguration;
 import com.lislon.sat.model.Account;
+import org.eclipse.jetty.http.HttpStatus;
 import org.junit.Assert;
 import org.junit.Test;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
@@ -41,6 +43,12 @@ public class AccountsWsIT extends AbstractIT {
         Account addedAccount = apiAddAccount(Account.createWithBalance(123));
         Account returnedAccount = apiGetAccount(addedAccount.getId());
         Assert.assertEquals(Integer.valueOf(123), returnedAccount.getBalance());
+    }
+
+    @Test
+    public void should_get_not_existing_account_should_be_404() {
+        Response response = target("accounts/123").request().get();
+        Assert.assertEquals(HttpStatus.NOT_FOUND_404, response.getStatus());
     }
 
 }

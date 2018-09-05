@@ -14,6 +14,6 @@ public abstract class AbstractIT extends JerseyTest {
     }
 
     protected Account apiGetAccount(int id) {
-        return target("accounts/" + id).request().get(Account.class);
+        return target("accounts/" + id).request().get().readEntity(Account.class);
     }
 }
