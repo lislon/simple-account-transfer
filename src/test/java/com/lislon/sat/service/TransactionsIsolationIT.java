@@ -2,7 +2,7 @@ package com.lislon.sat.service;
 
 import com.google.testing.threadtester.*;
 import com.lislon.sat.model.Account;
-import com.lislon.sat.model.TransactionDetails;
+import com.lislon.sat.model.TransactionResult;
 import com.lislon.sat.model.TransactionStatus;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,8 +17,8 @@ public class TransactionsIsolationIT {
     private volatile Account sender;
     private volatile Account recipient;
 
-    private volatile TransactionDetails result1;
-    private volatile TransactionDetails result2;
+    private volatile TransactionResult result1;
+    private volatile TransactionResult result2;
 
     @Test
     public void testPutIfAbsent() {

@@ -1,5 +1,8 @@
 package com.lislon.sat.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description="Represents details of error in case of error in API operation")
 public class ApiError {
     private String message;
     private int code;
@@ -12,6 +15,7 @@ public class ApiError {
         this.code = code;
     }
 
+    @Schema(description = "End-user friendly message describing error")
     public String getMessage() {
         return message;
     }
@@ -20,6 +24,7 @@ public class ApiError {
         this.message = message;
     }
 
+    @Schema(description = "Error code")
     public int getCode() {
         return code;
     }

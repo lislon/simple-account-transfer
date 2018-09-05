@@ -1,7 +1,7 @@
 package com.lislon.sat.service;
 
 import com.lislon.sat.model.Account;
-import com.lislon.sat.model.TransactionDetails;
+import com.lislon.sat.model.TransactionResult;
 import com.lislon.sat.model.TransactionStatus;
 import org.jvnet.hk2.annotations.Service;
 
@@ -30,8 +30,8 @@ public class TransactionsService {
      * @param amount amount of money to transfer from account.
      * @return Result of transfer operation.
      */
-    public TransactionDetails transfer(Integer senderAccountId, Integer recipientAccountId, int amount) {
-        return TransactionDetails.create(doTransfer(senderAccountId, recipientAccountId, amount));
+    public TransactionResult transfer(Integer senderAccountId, Integer recipientAccountId, int amount) {
+        return TransactionResult.create(doTransfer(senderAccountId, recipientAccountId, amount));
     }
 
     private TransactionStatus doTransfer(Integer senderAccountId, Integer recipientAccountId, int amount) {

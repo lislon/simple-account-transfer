@@ -1,11 +1,18 @@
 package com.lislon.sat.model;
 
 
-public class Transaction {
-    public Integer id;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-    public Integer from;
-    public Integer to;
+@Schema(description="Used to specify details for transaction")
+public class Transaction {
+
+    @Schema(description="Senders account identifier")
+    public Integer senderAccountId;
+
+    @Schema(description="Receiver account identifier")
+    public Integer receiverAccountId;
+
+    @Schema(description="Amount of money to transfer")
     public Integer amount;
 
     public static Transaction send(Integer from, Integer to, Integer amount) {
@@ -15,34 +22,27 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(Integer from, Integer to, Integer amount) {
-        this.from = from;
-        this.to = to;
+    public Transaction(Integer senderAccountId, Integer receiverAccountId, Integer amount) {
+        this.senderAccountId = senderAccountId;
+        this.receiverAccountId = receiverAccountId;
         this.amount = amount;
     }
 
-    public Integer getId() {
-        return id;
+
+    public Integer getSenderAccountId() {
+        return senderAccountId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setSenderAccountId(Integer senderAccountId) {
+        this.senderAccountId = senderAccountId;
     }
 
-    public Integer getFrom() {
-        return from;
+    public Integer getReceiverAccountId() {
+        return receiverAccountId;
     }
 
-    public void setFrom(Integer from) {
-        this.from = from;
-    }
-
-    public Integer getTo() {
-        return to;
-    }
-
-    public void setTo(Integer to) {
-        this.to = to;
+    public void setReceiverAccountId(Integer receiverAccountId) {
+        this.receiverAccountId = receiverAccountId;
     }
 
     public Integer getAmount() {

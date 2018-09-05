@@ -3,7 +3,7 @@ package com.lislon.sat.ws;
 import com.lislon.sat.JerseyConfiguration;
 import com.lislon.sat.model.Account;
 import com.lislon.sat.model.Transaction;
-import com.lislon.sat.model.TransactionDetails;
+import com.lislon.sat.model.TransactionResult;
 import com.lislon.sat.model.TransactionStatus;
 import org.eclipse.jetty.http.HttpStatus;
 import org.junit.Assert;
@@ -25,7 +25,7 @@ public class TransactionsWsIT extends AbstractIT {
         int accountId1 = createAccountWithBalance(100);
         int accountId2 = createAccountWithBalance(200);
 
-        TransactionDetails transferResult = sendMoney(accountId1, accountId2, 50).readEntity(TransactionDetails.class);
+        TransactionResult transferResult = sendMoney(accountId1, accountId2, 50).readEntity(TransactionResult.class);
         Assert.assertEquals(TransactionStatus.SUCCESS, transferResult.getStatus());
 
         Account account1 = apiGetAccount(accountId1);
