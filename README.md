@@ -147,3 +147,18 @@ HTTP/1.1 409 CONFLICT
   "code": 1
 }
 ```
+
+
+Error codes
+===========
+
+List of possible application error codes:
+
+| Code | Description |
+| ---- | ---------- |
+|  1  | Not enough funds for transfer |
+|  2  | transaction sender not exists |
+|  3  | transaction receiver not exists |
+|  4  | requested account not found |
+|  5  | invalid amount in transaction |
+
