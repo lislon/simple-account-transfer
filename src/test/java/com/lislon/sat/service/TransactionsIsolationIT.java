@@ -7,10 +7,18 @@ import com.lislon.sat.model.TransactionStatus;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.anyOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
+/**
+ * Integration test for transfer funds behaviour in multithread environment.
+ * <p>
+ * This tests a double spending attack when 2 threads try to sends funds simultaneously.
+ * <p>
+ * The google weaver will emulate different order of execution inside {@link TransactionsService#transfer} method.
+ * <p>
+ *     NOTE: For some reason this test wasn't able to catch a deadlock bug
+ *     (see TODO in {@link TransactionsService#transfer})
+ *
+ * {@see http://www.mapdb.org/blog/thread_weaver/}
+ */
 public class TransactionsIsolationIT {
 
     private volatile TransactionsService service;
@@ -28,6 +36,9 @@ public class TransactionsIsolationIT {
         runner.runTests(this.getClass(), TransactionsService.class);
     }
 
+    /**
+     * Prepare the test.
+     */
     @ThreadedBefore
     public void before() {
         AccountsService accountsService = new AccountsService();
