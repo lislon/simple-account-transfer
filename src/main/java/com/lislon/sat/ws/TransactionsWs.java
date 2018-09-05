@@ -54,7 +54,7 @@ public class TransactionsWs {
         switch (result.getStatus()) {
             case INSUFFICIENT_FUNDS:
                 return error(
-                        "Client doesn't have enough funds to made transfer",
+                        "Client doesn't have enough funds",
                         CODE_ERROR_NOT_ENOUGH_FUNDS,
                         Response.Status.CONFLICT
                 );

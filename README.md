@@ -40,57 +40,111 @@ then select API method and click `Try it out` buttons.
 API endpoints
 =============
 
-### /api/accounts/{id}
----
-##### ***GET***
-**Summary:** Show details for single account by its id
 
-**Parameters**
+#### Show all accounts
 
-| Name | Located in | Description | Required | Schema |
-| ---- | ---------- | ----------- | -------- | ---- |
-| id | path | Account identifier | Yes | integer |
+Request:
 
-**Responses**
+``` http
+GET http://localhost:8080/api/accounts
+```
 
-| Code | Description |
-| ---- | ----------- |
-| 200 | Account details with identifier |
-| 404 | Account cannot be found |
+Example response:
 
-### /api/accounts
----
-##### ***GET***
-**Summary:** Lists all accounts in system
+``` http
+HTTP/1.1 200 OK
 
-**Description:** Show all account with their balances
+[ {
+  "id" : 1,
+  "balance" : 100
+}, {
+  "id" : 2,
+  "balance" : 200
+} ]
+```
 
-**Responses**
+#### Show single account details
 
-| Code | Description |
-| ---- | ----------- |
-| default | default response |
+Request:
 
-##### ***POST***
-**Summary:** Adds a new account to system
+``` http
+GET http://localhost:8080/api/accounts/1
+```
 
-**Responses**
+Example response:
 
-| Code | Description |
-| ---- | ----------- |
-| 201 | Account details with assigned identifier |
+``` http
+HTTP/1.1 200 OK
 
-### /api/transactions
----
-##### ***POST***
-**Summary:** Transfer fund from one account to another
+{
+  "id" : 2,
+  "balance" : 200
+}
+```
 
-**Description:** Withdraw specified amount of money from first account and deposit it to second account
+Example error:
 
-**Responses**
+``` http
+HTTP/1.1 404 NOT FOUND
 
-| Code | Description |
-| ---- | ----------- |
-| 200 | Transaction details with status |
-| 404 | Sender/Receiver account not exists |
-| 409 | Insufficient funds |
+{
+  "message" : "Account with identifier 3 not found",
+  "code" : 4
+}
+```
+
+#### Add new account
+
+Request:
+
+``` http
+POST http://localhost:8080/api/accounts
+
+{
+  "id": 0,
+  "balance": 100
+}
+```
+
+Response:
+
+``` http
+HTTP/1.1 201 ADDED
+{
+  "id": 3,
+  "balance": 100
+}
+```
+
+#### Transfer funds from one account to another
+
+Request:
+
+``` http
+http://localhost:8080/api/transactions
+
+{
+  "senderAccountId": 1,
+  "receiverAccountId": 2,
+  "amount": 10
+}
+```
+
+Response:
+
+``` http
+HTTP/1.1 200 OK
+{
+  "status": "SUCCESS"
+}
+```
+
+Example error:
+
+``` http
+HTTP/1.1 409 CONFLICT
+{
+  "message": "Client doesn't have enough funds",
+  "code": 1
+}
+```
